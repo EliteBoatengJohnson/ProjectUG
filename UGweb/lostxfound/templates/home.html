@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Lost and Found{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Welcome to Lost and Found</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Recent Found Items</h2>
+        <div class="row">
+            {% for item in recent_items %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description|truncatewords:20 }}</p>
+                            <a href="{{ item.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No recent items found.</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <h2>Categories</h2>
+        <ul class="list-group">
+            {% for category in categories %}
+                <li class="list-group-item">
+                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No categories available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
